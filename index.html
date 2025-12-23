@@ -74,6 +74,11 @@
     button:hover {
       background: #d62828;
     }
+
+    .no-scroll {
+      overflow:hidden;
+      height: 100vh;
+    }
   </style>
 </head>
 <body>
@@ -138,6 +143,8 @@
     function abrirModal(src) {
       document.getElementById('modalImg').src = src;
       document.getElementById('modal').style.display = 'flex';
+  
+      document.body.classList.add('no-scroll');
 
       // Añade un estado al historial
       history.pushState({ modal: true }, "");
@@ -145,6 +152,8 @@
 
     function cerrarModal() {
       document.getElementById('modal').style.display = 'none';
+
+      document.body.classList.remove('no-scroll');
 
       // Solo retrocede si el modal está abierto
       if (history.state && history.state.modal) {
@@ -155,6 +164,7 @@
       // Detecta botón "Atrás" del móvil
     window.addEventListener('popstate', function (event) {
       document.getElementById('modal').style.display = 'none';
+      document.body.classList.remove('no-scroll');
     });
   </script>
 
