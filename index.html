@@ -132,14 +132,28 @@
       document.getElementById('mensaje').style.display = 'block';
       document.getElementById('galeria').style.display = 'block';
     }
+
     function abrirModal(src) {
       document.getElementById('modalImg').src = src;
       document.getElementById('modal').style.display = 'flex';
+
+      // Añade un estado al historial
+      history.pushState({ modal: true }, "");
     }
 
     function cerrarModal() {
       document.getElementById('modal').style.display = 'none';
-    }
+
+      // Solo retrocede si el modal está abierto
+      if (history.state && history.state.modal) {
+        history.back();
+      }
+
+      // Detecta botón "Atrás" del móvil
+    window.addEventListener('popstate', function (event) {
+      document.getElementById('modal').style.display = 'none';
+    });
+  }
   </script>
 
   <div id="modal" onclick="cerrarModal()" style="
