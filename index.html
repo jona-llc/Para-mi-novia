@@ -167,10 +167,19 @@
       const modal = document.getElementById('modal');
       const video = document.getElementById('modalVideo');
 
+      // Oculta el modal
       modal.style.display = 'none';
-      video.currentTime = 0; // vuelve al inicio
+
+      // Pausa y reinicia el video si estaba reproduciéndose
+      if (!video.paused) {
+        video.pause();
+        video.currentTime = 0;
+      }
+
+      // Permite volver a hacer scroll
       document.body.classList.remove('no-scroll');
 
+      // Maneja el historial
       if (history.state && history.state.modal) {
         history.back();
       }
@@ -193,12 +202,15 @@
       max-width:90%; max-height:90%; border-radius:20px;
       box-shadow:0 20px 40px rgba(0,0,0,0.5);">
       
-    <video id="modalVideo" controls style="
+    <video id="modalVideo" controls onclick="event.stopPropagation()" style="
       display:none;
       max-width:90%;
       max-height:90%;
       border-radius:20px;
-      box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+      box-shadow:0 20px 40px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 10;
+    ">
     </video>
   </div>
 
