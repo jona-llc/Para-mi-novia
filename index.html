@@ -124,7 +124,9 @@
         <img src="foto17.jpeg" onclick="abrirModal(this.src)" alt="Foto 17" style="width:100%; height:180px; object-fit:cover; border-radius:15px;">
         <img src="foto18.jpeg" onclick="abrirModal(this.src)" alt="Foto 18" style="width:100%; height:180px; object-fit:cover; border-radius:15px;">
         <img src="foto19.jpeg" onclick="abrirModal(this.src)" alt="Foto 19" style="width:100%; height:180px; object-fit:cover; border-radius:15px;">
-
+        <video src="video1.mp4" onclick="abrirModal(this.src)" alt="Video 1" style="width:100%; height:180px; object-fit:cover; border-radius:15px;" muted></video>
+        <video src="video2.mp4" onclick="abrirModal(this.src)" alt="Video 2" style="width:100%; height:180px; object-fit:cover; border-radius:15px;" muted></video>
+        <video src="video3.mp4" onclick="abrirModal(this.src)" alt="Video 3" style="width:100%; height:180px; object-fit:cover; border-radius:15px;" muted></video>
       </div>
     </div>
 
@@ -142,21 +144,30 @@
     }
 
     function abrirModal(src) {
-      document.getElementById('modalImg').src = src;
-      document.getElementById('modal').style.display = 'flex';
-  
-      document.body.classList.add('no-scroll');
+      const img = document.getElementById('modalImg');
+      const video = document.getElementById('modalVideo');
 
-      // Añade un estado al historial
+      if (src.endsWith(".mp4")) {
+        img.style.display = "none";
+        video.style.display = "block";
+        video.src = src;
+        video.play();
+      } else {
+        video.style.display = "none";
+        img.style.display = "block";
+        img.src = src;
+      }
+
+      document.getElementById('modal').style.display = 'flex';
+      document.body.classList.add('no-scroll');
       history.pushState({ modal: true }, "");
     }
 
     function cerrarModal() {
       document.getElementById('modal').style.display = 'none';
-
+      document.getElementById('modalVideo').pause();
       document.body.classList.remove('no-scroll');
 
-      // Solo retrocede si el modal está abierto
       if (history.state && history.state.modal) {
         history.back();
       }
@@ -179,6 +190,14 @@
       max-width:90%; max-height:90%; border-radius:20px;
       box-shadow:0 20px 40px rgba(0,0,0,0.5);">
   </div>
+
+  <video id="modalVideo" controls style="
+    display:none;
+    max-width:90%;
+    max-height:90%;
+    border-radius:20px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+  </video>
 
 </body>
 </html>
